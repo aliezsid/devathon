@@ -16,8 +16,12 @@ const styles = {
 	cardImage: {
 		height: cardWidth,
 		width: cardWidth,
-		objectFit: "cover",
 		background: "rgba(0,0,0,0.12)"
+	},
+	image: {
+		height: cardWidth,
+		width: cardWidth,
+		objectFit: "cover"
 	},
 	cardTitle: {
 		color: textColor,
@@ -37,15 +41,19 @@ const styles = {
 
 export default props => {
 	return (
-		<div style={styles.cardWrapper}>
+		<div
+			onClick={props.clickHandler}
+			className="card-wrapper"
+			style={styles.cardWrapper}
+		>
 			<div style={styles.cardImage}>
-				<img src={props.img} alt="" />
+				<img style={styles.image} src={props.images[0]} alt="" />
 			</div>
 			<div style={styles.cardTitle}>
-				<p>{props.title}</p>
+				<p>{props.title || "Product Title"}</p>
 			</div>
 			<div style={styles.cardPrice}>
-				<p>&#8377; {props.price}</p>
+				<p>&#8377; {props.price || "--"}</p>
 			</div>
 		</div>
 	);

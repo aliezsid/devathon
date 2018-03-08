@@ -1,20 +1,22 @@
 import React from "react";
 import { render } from "react-dom";
 
-import Card from "./components/Card";
-import Button from "./components/Button";
-import Input from "./components/Input";
+import mockData from "./mockdata";
+
+import ProductCards from "./containers/ProductCards";
 
 const styles = {
 	appRoot: {
-		background: "#F5F5F5"
+		background: "#F5F5F5",
+		height: "100%",
+		width: "100%"
 	}
 };
 
 const App = () => {
 	return (
 		<div style={styles.appRoot}>
-			<Input placeholder="Placeholder" />
+			<ProductCards data={mockData} />
 		</div>
 	);
 };

@@ -12,10 +12,9 @@
   },
   "scripts": {
     "dist": "mkdir -p dist",
-    "css": "cp -r css/* dist/",
-    "dev": "yarn dist && yarn css && watchify src/App.js -v -t babelify -o dist/bundle.js",
+    "dev": "yarn dist && watchify src/App.js -v -t babelify -o dist/bundle.js",
     "clean": "rm -rf dist",
-    "build": "yarn clean && yarn dist && yarn css && browserify src/App.js -t babelify -o dist/bundle.js"
+    "build": "yarn clean && yarn dist && browserify src/App.js -t babelify -o dist/bundle.js"
   },
   "dependencies": {
     "babel-preset-react": "^6.24.1",

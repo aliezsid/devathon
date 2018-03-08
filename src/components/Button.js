@@ -2,8 +2,8 @@ import React from "react";
 
 const styles = {
 	btn: {
-		display: "inline-block",
 		padding: "9px",
+		display: "inline-block",
 		cursor: "pointer"
 	},
 	btnPrimary: {
@@ -17,9 +17,20 @@ const styles = {
 		borderRadius: "1000px",
 		color: "white"
 	},
+	btnPrimarySquare: {
+		height: 25,
+		width: 25,
+		display: "flex",
+		alignItems: "center",
+		justifyContent: "center",
+		color: "white",
+		background: "#56C9E9",
+		fontSize: 25
+	},
 	btnTransSquare: {
 		height: 25,
 		width: 25,
+		background: "rgba(0,0,0,0)",
 		display: "flex",
 		alignItems: "center",
 		justifyContent: "center",
@@ -38,8 +49,10 @@ const returnStyleObject = buttonType => {
 		btnStyle = assign(styles.btnPrimary);
 	} else if (buttonType.secondary) {
 		btnStyle = assign(styles.btnSecondary);
-	} else if (buttonType.square) {
+	} else if (buttonType.transparentsquare) {
 		btnStyle = assign(styles.btnTransSquare);
+	} else if (buttonType.square) {
+		btnStyle = assign(styles.btnPrimarySquare);
 	}
 
 	return btnStyle;
@@ -48,7 +61,12 @@ const returnStyleObject = buttonType => {
 export default props => {
 	let btnStyle = returnStyleObject(props);
 	return (
-		<div className="btn" style={btnStyle} onClick={props.clickHandler}>
+		<div
+			className="btn"
+			id={props.styleId}
+			style={btnStyle}
+			onClick={props.clickHandler}
+		>
 			{props.label}
 		</div>
 	);
