@@ -12,7 +12,11 @@ const styles = {
 };
 
 const App = () => {
-	return <div style={styles.appRoot} />;
+	return (
+		<div style={styles.appRoot}>
+			<Input placeholder="Placeholder" />
+		</div>
+	);
 };
 
 render(<App />, document.getElementById("root"));

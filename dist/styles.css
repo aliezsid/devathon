@@ -26,6 +26,7 @@
 
 .input-wrapper > label {
 	z-index: 0;
+	cursor: text;
 	position: absolute;
 	left: 10px;
 	top: 50%;
