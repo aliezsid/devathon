@@ -12,13 +12,7 @@ const styles = {
 };
 
 const App = () => {
-	return (
-		<div style={styles.appRoot}>
-			<Card title="Product Title" price="--" />
-			<Button square label="+" />
-			<Input placeholder="Placeholder" />
-		</div>
-	);
+	return <div style={styles.appRoot} />;
 };
 
 render(<App />, document.getElementById("root"));

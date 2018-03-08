@@ -18086,13 +18086,7 @@ var styles = {
 };
 
 var App = function App() {
-	return _react2.default.createElement(
-		"div",
-		{ style: styles.appRoot },
-		_react2.default.createElement(_Card2.default, { title: "Product Title", price: "--" }),
-		_react2.default.createElement(_Button2.default, { square: true, label: "+" }),
-		_react2.default.createElement(_Input2.default, { placeholder: "Placeholder" })
-	);
+	return _react2.default.createElement("div", { style: styles.appRoot });
 };
 
 (0, _reactDom.render)(_react2.default.createElement(App, null), document.getElementById("root"));
@@ -18260,11 +18254,21 @@ var _react2 = _interopRequireDefault(_react);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-exports.default = function (props) {
+function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
+
+exports.default = function (_ref) {
+	var placeholder = _ref.placeholder,
+	    props = _objectWithoutProperties(_ref, ["placeholder"]);
+
 	return _react2.default.createElement(
 		"div",
 		{ className: "input-wrapper" },
-		_react2.default.createElement("input", _extends({ type: "text" }, props))
+		_react2.default.createElement("input", _extends({ type: "text" }, props, { placeholder: " ", required: true })),
+		_react2.default.createElement(
+			"label",
+			null,
+			placeholder
+		)
 	);
 };
 
