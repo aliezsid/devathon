@@ -25595,24 +25595,28 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var thumbWidth = 300;
 
-var styles = {
-	cardImage: {
-		height: thumbWidth,
-		width: thumbWidth,
-		background: "rgba(0,0,0,0.12)"
-	},
-	image: {
-		height: thumbWidth,
-		width: thumbWidth,
-		objectFit: "cover"
-	}
+var ThumbStyle = function ThumbStyle(width) {
+	return {
+		imageThumb: {
+			height: width || thumbWidth,
+			width: width || thumbWidth,
+			background: "rgba(0,0,0,0.12)"
+		},
+		image: {
+			height: width || thumbWidth,
+			width: width || thumbWidth,
+			objectFit: "cover"
+		}
+	};
 };
 
 exports.default = function (props) {
+	var computedStyle = void 0;
+	computedStyle = ThumbStyle(props.width);
 	return _react2.default.createElement(
 		"div",
-		{ style: styles.cardImage },
-		_react2.default.createElement("img", { style: styles.image, src: props.imageSource, alt: "" })
+		{ className: "image-thumb", style: computedStyle.imageThumb },
+		_react2.default.createElement("img", { style: computedStyle.image, src: props.imageSource, alt: "" })
 	);
 };
 
@@ -25638,19 +25642,25 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
 
 exports.default = function (_ref) {
-	var className = _ref.className,
-	    placeholder = _ref.placeholder,
-	    props = _objectWithoutProperties(_ref, ["className", "placeholder"]);
+	var label = _ref.label,
+	    prefix = _ref.prefix,
+	    className = _ref.className,
+	    props = _objectWithoutProperties(_ref, ["label", "prefix", "className"]);
 
 	var id = (0, _uniqueId2.default)();
 	return _react2.default.createElement(
 		"div",
-		{ className: "input-wrapper " + className },
-		_react2.default.createElement("input", _extends({ id: id, type: "text" }, props, { placeholder: " ", required: true })),
+		{ className: "input-wrapper flex flex-align-center " + className },
+		_react2.default.createElement(
+			"div",
+			null,
+			prefix
+		),
+		_react2.default.createElement("input", _extends({ id: id, type: "text" }, props, { required: true })),
 		_react2.default.createElement(
 			"label",
 			{ htmlFor: id },
-			placeholder
+			label
 		)
 	);
 };
@@ -25678,8 +25688,6 @@ var _ProductDetailsForm2 = _interopRequireDefault(_ProductDetailsForm);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
-
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -25702,12 +25710,10 @@ var ProductCards = function (_React$Component) {
 
 		return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = ProductCards.__proto__ || Object.getPrototypeOf(ProductCards)).call.apply(_ref, [this].concat(args))), _this), _this.state = {
 			data: _this.props.data,
-			visibleModals: []
+			visibleModalId: false
 		}, _this.showEditModalFor = function (id) {
-			var currModals = [].concat(_toConsumableArray(_this.state.visibleModals));
-			currModals.push(id);
 			_this.setState({
-				visibleModals: currModals
+				visibleModalId: id
 			});
 		}, _temp), _possibleConstructorReturn(_this, _ret);
 	}
@@ -25719,7 +25725,7 @@ var ProductCards = function (_React$Component) {
 
 			var _state = this.state,
 			    data = _state.data,
-			    visibleModals = _state.visibleModals;
+			    visibleModalId = _state.visibleModalId;
 
 			var CardList = data.map(function (product) {
 				return _react2.default.createElement(
@@ -25733,7 +25739,7 @@ var ProductCards = function (_React$Component) {
 						price: product.price,
 						images: product.images
 					}),
-					visibleModals.includes(product.id) ? _react2.default.createElement(_ProductDetailsForm2.default, { product: product }) : null
+					visibleModalId === product.id ? _react2.default.createElement(_ProductDetailsForm2.default, { product: product }) : null
 				);
 			});
 			return _react2.default.createElement(
@@ -25780,6 +25786,8 @@ var _ImageThumb2 = _interopRequireDefault(_ImageThumb);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -25801,14 +25809,29 @@ var ProductDetailsForm = function (_React$Component) {
 		}
 
 		return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = ProductDetailsForm.__proto__ || Object.getPrototypeOf(ProductDetailsForm)).call.apply(_ref, [this].concat(args))), _this), _this.state = {
-			product: _this.props.product
+			product: _this.props.product,
+			currency: "₹"
+		}, _this.inputChange = function (e) {
+			var _e$target = e.target,
+			    name = _e$target.name,
+			    value = _e$target.value;
+
+			_this.setState(function (prevState) {
+				var a = Object.assign({}, prevState);
+				a.product[name] = value;
+				return a;
+			});
 		}, _temp), _possibleConstructorReturn(_this, _ret);
 	}
 
 	_createClass(ProductDetailsForm, [{
 		key: "render",
 		value: function render() {
-			var product = this.state.product;
+			var _React$createElement;
+
+			var _state = this.state,
+			    currency = _state.currency,
+			    product = _state.product;
 
 			var placeholderImageLink = "http://scottishstainedglass.net/wp-content/uploads/2017/09/sample-img-2-600x400.png";
 			return _react2.default.createElement(
@@ -25816,27 +25839,75 @@ var ProductDetailsForm = function (_React$Component) {
 				{ className: "product-detail-wrapper" },
 				_react2.default.createElement(
 					"div",
-					{ className: "image-container" },
-					product.images.map(function (imgUrl) {
-						return _react2.default.createElement(_ImageThumb2.default, { key: (0, _uniqueId2.default)(), imageSource: imgUrl });
+					{ className: " grid grid-2" },
+					_react2.default.createElement(_ImageThumb2.default, { imageSource: product.images[0] }),
+					product.images.length > 1 ? _react2.default.createElement(
+						"div",
+						{ className: "grid grid-3" },
+						product.images.map(function (imgUrl) {
+							return _react2.default.createElement(_ImageThumb2.default, {
+								key: (0, _uniqueId2.default)(),
+								width: "90px",
+								imageSource: imgUrl
+							});
+						}),
+						_react2.default.createElement(_ImageThumb2.default, {
+							width: "90px",
+							imageSource: placeholderImageLink
+						})
+					) : _react2.default.createElement(_ImageThumb2.default, { imageSource: placeholderImageLink })
+				),
+				_react2.default.createElement(
+					"div",
+					{ className: "input-container" },
+					_react2.default.createElement(_Input2.default, {
+						label: "Product Title",
+						placeholder: "Enter Product Title",
+						name: "title",
+						onChange: this.inputChange,
+						value: product.title
 					}),
-					_react2.default.createElement(_ImageThumb2.default, { imageSource: placeholderImageLink })
+					_react2.default.createElement(_Input2.default, (_React$createElement = {
+						prefix: currency,
+						type: "number",
+						onChange: this.inputChange,
+						label: "Price",
+						placeholder: "Enter Product Title",
+						name: "price"
+					}, _defineProperty(_React$createElement, "placeholder", "0"), _defineProperty(_React$createElement, "value", product.price), _React$createElement)),
+					_react2.default.createElement(_Input2.default, {
+						onChange: this.inputChange,
+						label: "Offer Price",
+						placeholder: "Enter Offer Price",
+						name: "offerPrice",
+						value: product.offerPrice
+					}),
+					_react2.default.createElement(_Input2.default, {
+						prefix: currency,
+						type: "number",
+						onChange: this.inputChange,
+						label: "Shipping Cost",
+						name: "shippingPrice",
+						placeholder: "0",
+						value: product.shippingPrice
+					}),
+					_react2.default.createElement(_Input2.default, {
+						onChange: this.inputChange,
+						name: "inventory",
+						value: product.inventory,
+						label: "Inventory"
+					})
 				),
 				_react2.default.createElement(
 					"div",
-					{ className: "input-container width-50" },
-					_react2.default.createElement(_Input2.default, { placeholder: "Product Title" }),
-					_react2.default.createElement(_Input2.default, { placeholder: "Price" }),
-					_react2.default.createElement(_Input2.default, { placeholder: "Offer Price" }),
-					_react2.default.createElement(_Input2.default, { placeholder: "Shipping Cost" }),
-					_react2.default.createElement(_Input2.default, { placeholder: "Inventory" })
+					{ className: "padding-left-25 width-100" },
+					_react2.default.createElement(_Input2.default, {
+						label: "Description",
+						onChange: this.inputChange,
+						placeholder: "Enter Description for Product"
+					})
 				),
-				_react2.default.createElement(
-					"div",
-					{ className: "flex width-100" },
-					_react2.default.createElement(_Input2.default, { placeholder: "Description" })
-				),
-				_react2.default.createElement(_Button2.default, { styleId: "modal-button", square: true, label: "->" })
+				_react2.default.createElement(_Button2.default, { styleId: "modal-button", square: true, label: "\u2192" })
 			);
 		}
 	}]);
@@ -25871,7 +25942,7 @@ var mockData = [{
 }, {
 	id: (0, _uniqueId2.default)(),
 	title: "",
-	images: ["https://images.pexels.com/photos/640781/pexels-photo-640781.jpeg?w=1260&h=750&auto=compress&cs=tinysrgb", "https://images.pexels.com/photos/33045/lion-wild-africa-african.jpg?w=1260&h=750&auto=compress&cs=tinysrgb"],
+	images: ["https://images.pexels.com/photos/640781/pexels-photo-640781.jpeg?w=1260&h=750&auto=compress&cs=tinysrgb", "https://images.pexels.com/photos/33045/lion-wild-africa-african.jpg?w=1260&h=750&auto=compress&cs=tinysrgb", "https://images.pexels.com/photos/33045/lion-wild-africa-african.jpg?w=1260&h=750&auto=compress&cs=tinysrgb"],
 	price: "",
 	offerPrice: "",
 	shippingPrice: "",

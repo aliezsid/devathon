@@ -5,19 +5,17 @@ import ProductDetailsForm from "./ProductDetailsForm";
 export default class ProductCards extends React.Component {
 	state = {
 		data: this.props.data,
-		visibleModals: []
+		visibleModalId: false
 	};
 
 	showEditModalFor = id => {
-		const currModals = [...this.state.visibleModals];
-		currModals.push(id);
 		this.setState({
-			visibleModals: currModals
+			visibleModalId: id
 		});
 	};
 
 	render() {
-		const { data, visibleModals } = this.state;
+		const { data, visibleModalId } = this.state;
 		const CardList = data.map(product => (
 			<div key={product.id}>
 				<Card
@@ -28,7 +26,7 @@ export default class ProductCards extends React.Component {
 					price={product.price}
 					images={product.images}
 				/>
-				{visibleModals.includes(product.id) ? (
+				{visibleModalId === product.id ? (
 					<ProductDetailsForm product={product} />
 				) : null}
 			</div>

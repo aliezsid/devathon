@@ -7,32 +7,94 @@ import ImageThumb from "../components/ImageThumb";
 
 export default class ProductDetailsForm extends React.Component {
 	state = {
-		product: this.props.product
+		product: this.props.product,
+		currency: "₹"
+	};
+
+	inputChange = e => {
+		const { name, value } = e.target;
+		this.setState(prevState => {
+			const a = Object.assign({}, prevState);
+			a.product[name] = value;
+			return a;
+		});
 	};
 
 	render() {
-		const { product } = this.state;
+		const { currency, product } = this.state;
 		const placeholderImageLink =
 			"http://scottishstainedglass.net/wp-content/uploads/2017/09/sample-img-2-600x400.png";
 		return (
 			<div className="product-detail-wrapper">
-				<div className="image-container">
-					{product.images.map(imgUrl => (
-						<ImageThumb key={uniqueId()} imageSource={imgUrl} />
-					))}
-					<ImageThumb imageSource={placeholderImageLink} />
+				<div className=" grid grid-2">
+					<ImageThumb imageSource={product.images[0]} />
+					{product.images.length > 1 ? (
+						<div className="grid grid-3">
+							{product.images.map(imgUrl => (
+								<ImageThumb
+									key={uniqueId()}
+									width="90px"
+									imageSource={imgUrl}
+								/>
+							))}
+							<ImageThumb
+								width="90px"
+								imageSource={placeholderImageLink}
+							/>
+						</div>
+					) : (
+						<ImageThumb imageSource={placeholderImageLink} />
+					)}
 				</div>
-				<div className="input-container width-50">
-					<Input placeholder="Product Title" />
-					<Input placeholder="Price" />
-					<Input placeholder="Offer Price" />
-					<Input placeholder="Shipping Cost" />
-					<Input placeholder="Inventory" />
+				<div className="input-container">
+					<Input
+						label="Product Title"
+						placeholder="Enter Product Title"
+						name="title"
+						onChange={this.inputChange}
+						value={product.title}
+					/>
+					<Input
+						prefix={currency}
+						type="number"
+						onChange={this.inputChange}
+						label="Price"
+						placeholder="Enter Product Title"
+						name="price"
+						placeholder="0"
+						value={product.price}
+					/>
+					<Input
+						onChange={this.inputChange}
+						label="Offer Price"
+						placeholder="Enter Offer Price"
+						name="offerPrice"
+						value={product.offerPrice}
+					/>
+					<Input
+						prefix={currency}
+						type="number"
+						onChange={this.inputChange}
+						label="Shipping Cost"
+						name="shippingPrice"
+						placeholder="0"
+						value={product.shippingPrice}
+					/>
+					<Input
+						onChange={this.inputChange}
+						name="inventory"
+						value={product.inventory}
+						label="Inventory"
+					/>
 				</div>
-				<div className="flex width-100">
-					<Input placeholder="Description" />
+				<div className="padding-left-25 width-100">
+					<Input
+						label="Description"
+						onChange={this.inputChange}
+						placeholder="Enter Description for Product"
+					/>
 				</div>
-				<Button styleId="modal-button" square label="->" />
+				<Button styleId="modal-button" square label="&rarr;" />
 			</div>
 		);
 	}

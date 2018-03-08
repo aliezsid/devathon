@@ -2,23 +2,27 @@ import React from "react";
 
 const thumbWidth = 300;
 
-const styles = {
-	cardImage: {
-		height: thumbWidth,
-		width: thumbWidth,
-		background: "rgba(0,0,0,0.12)"
-	},
-	image: {
-		height: thumbWidth,
-		width: thumbWidth,
-		objectFit: "cover"
-	}
+const ThumbStyle = width => {
+	return {
+		imageThumb: {
+			height: width || thumbWidth,
+			width: width || thumbWidth,
+			background: "rgba(0,0,0,0.12)"
+		},
+		image: {
+			height: width || thumbWidth,
+			width: width || thumbWidth,
+			objectFit: "cover"
+		}
+	};
 };
 
 export default props => {
+	let computedStyle;
+	computedStyle = ThumbStyle(props.width);
 	return (
-		<div style={styles.cardImage}>
-			<img style={styles.image} src={props.imageSource} alt="" />
+		<div className="image-thumb" style={computedStyle.imageThumb}>
+			<img style={computedStyle.image} src={props.imageSource} alt="" />
 		</div>
 	);
 };
