@@ -9,5 +9,20 @@
     "babel-preset-env": "^1.6.1",
     "babel-preset-stage-2": "^6.24.1",
     "nodemon": "^1.17.1"
+  },
+  "scripts": {
+    "dist":"mkdir -p dist",
+    "css":"cp -r css/* dist/",
+    "dev": "yarn dist && yarn css && watchify src/App.js -v -t babelify -o dist/bundle.js",
+    "clean": "rm -rf dist",
+    "build": "yarn clean && yarn dist && yarn css && browserify src/App.js -t babelify -o dist/bundle.js"
+  },
+  "dependencies": {
+    "babel-preset-react": "^6.24.1",
+    "babelify": "^8.0.0",
+    "browserify": "^16.1.1",
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0",
+    "watchify": "^3.11.0"
   }
 }
