@@ -18090,7 +18090,7 @@ var App = function App() {
 		"div",
 		{ style: styles.appRoot },
 		_react2.default.createElement(_Card2.default, { title: "Product Title", price: "--" }),
-		_react2.default.createElement(_Button2.default, { label: "Button" }),
+		_react2.default.createElement(_Button2.default, { square: true, label: "+" }),
 		_react2.default.createElement(_Input2.default, { placeholder: "Placeholder" })
 	);
 };
@@ -18110,15 +18110,59 @@ var _react2 = _interopRequireDefault(_react);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+var styles = {
+	btn: {
+		display: "inline-block",
+		padding: "9px",
+		cursor: "pointer"
+	},
+	btnPrimary: {
+		background: "#56C9E9",
+		color: "white"
+	},
+	btnSecondary: {
+		paddingLeft: "16px",
+		paddingRight: "16px",
+		background: "#56C9E9",
+		borderRadius: "1000px",
+		color: "white"
+	},
+	btnTransSquare: {
+		height: 25,
+		width: 25,
+		display: "flex",
+		alignItems: "center",
+		justifyContent: "center",
+		color: "rgba(0,0,0,0.4)",
+		border: "1px solid rgba(0,0,0,0.4)",
+		fontSize: 25
+	}
+};
+
+var returnStyleObject = function returnStyleObject(buttonType) {
+	var btnStyle = void 0;
+
+	var assign = function assign(btnType) {
+		return Object.assign({}, styles.btn, btnType);
+	};
+
+	if (buttonType.primary) {
+		btnStyle = assign(styles.btnPrimary);
+	} else if (buttonType.secondary) {
+		btnStyle = assign(styles.btnSecondary);
+	} else if (buttonType.square) {
+		btnStyle = assign(styles.btnTransSquare);
+	}
+
+	return btnStyle;
+};
+
 exports.default = function (props) {
+	var btnStyle = returnStyleObject(props);
 	return _react2.default.createElement(
 		"div",
-		{ className: "btn" },
-		_react2.default.createElement(
-			"div",
-			null,
-			props.label
-		)
+		{ className: "btn", style: btnStyle, onClick: props.clickHandler },
+		props.label
 	);
 };
 
@@ -18144,7 +18188,9 @@ var styles = {
 		width: cardWidth,
 		display: "flex",
 		flexDirection: "column",
-		background: "#FFFFFF"
+		background: "#FFFFFF",
+		fontWeight: 600,
+		boxShadow: "0px 1px 1px 0px rgba(0,0,0,0.04)"
 	},
 	cardImage: {
 		height: cardWidth,
@@ -18156,13 +18202,15 @@ var styles = {
 		color: textColor,
 		height: textHeights,
 		padding: "0px 20px",
-		paddingTop: "20px"
+		paddingTop: "20px",
+		fontSize: 14
 	},
 	cardPrice: {
 		color: textColor,
 		height: textHeights,
 		padding: "0px 20px",
-		paddingTop: "5px"
+		paddingTop: "5px",
+		fontSize: 14
 	}
 };
 

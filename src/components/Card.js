@@ -9,7 +9,9 @@ const styles = {
 		width: cardWidth,
 		display: "flex",
 		flexDirection: "column",
-		background: "#FFFFFF"
+		background: "#FFFFFF",
+		fontWeight: 600,
+		boxShadow: "0px 1px 1px 0px rgba(0,0,0,0.04)"
 	},
 	cardImage: {
 		height: cardWidth,
@@ -21,13 +23,15 @@ const styles = {
 		color: textColor,
 		height: textHeights,
 		padding: "0px 20px",
-		paddingTop: "20px"
+		paddingTop: "20px",
+		fontSize: 14
 	},
 	cardPrice: {
 		color: textColor,
 		height: textHeights,
 		padding: "0px 20px",
-		paddingTop: "5px"
+		paddingTop: "5px",
+		fontSize: 14
 	}
 };
 

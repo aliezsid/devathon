@@ -15,7 +15,7 @@ const App = () => {
 	return (
 		<div style={styles.appRoot}>
 			<Card title="Product Title" price="--" />
-			<Button label="Button" />
+			<Button square label="+" />
 			<Input placeholder="Placeholder" />
 		</div>
 	);
