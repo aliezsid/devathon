@@ -98,6 +98,7 @@ export default class ProductDetailsForm extends React.Component {
 						name="inventory"
 						value={product.inventory}
 						label="Inventory"
+						placeholder="1"
 					/>
 				</div>
 				<div className="padding-left-25">
