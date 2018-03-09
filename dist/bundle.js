@@ -25638,6 +25638,7 @@ exports.default = function (props) {
 			_react2.default.createElement("input", {
 				id: uploadId,
 				type: "file",
+				onChange: props.changeHandler,
 				className: "hidden",
 				accept: "image/*"
 			}),
@@ -25868,8 +25869,24 @@ var ProductDetailsForm = function (_React$Component) {
 				a.product[name] = value;
 				return a;
 			});
-		}, _this.uploadImage = function () {}, _this.saveData = function () {
+		}, _this.uploadImage = function (e) {
+			var product = _this.state.product;
+
+			var file = e.target.files[0];
+			var reader = new FileReader();
+			var url = reader.readAsDataURL(file);
+			var self = _this;
+			reader.onloadend = function (e) {
+				var newProduct = Object.assign({}, product);
+				newProduct.images.push(reader.result);
+				self.setState({
+					product: newProduct
+				});
+			};
+		}, _this.saveData = function () {
 			//API CALL to push product data
+
+			//Close the Form
 			_this.props.closeForm();
 		}, _temp), _possibleConstructorReturn(_this, _ret);
 	}
@@ -25904,12 +25921,12 @@ var ProductDetailsForm = function (_React$Component) {
 						_react2.default.createElement(_ImageThumb2.default, {
 							width: "90px",
 							upload: true,
-							clickHandler: this.uploadImage,
+							changeHandler: this.uploadImage,
 							imageSource: placeholderImageLink
 						})
 					) : _react2.default.createElement(_ImageThumb2.default, {
 						upload: true,
-						clickHandler: this.uploadImage,
+						changeHandler: this.uploadImage,
 						imageSource: placeholderImageLink
 					})
 				),

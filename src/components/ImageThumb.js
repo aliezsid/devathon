@@ -39,6 +39,7 @@ export default props => {
 					<input
 						id={uploadId}
 						type="file"
+						onChange={props.changeHandler}
 						className="hidden"
 						accept="image/*"
 					/>

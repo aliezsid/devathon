@@ -20,10 +20,25 @@ export default class ProductDetailsForm extends React.Component {
 		});
 	};
 
-	uploadImage = () => {};
+	uploadImage = e => {
+		const { product } = this.state;
+		const file = e.target.files[0];
+		const reader = new FileReader();
+		const url = reader.readAsDataURL(file);
+		const self = this;
+		reader.onloadend = function(e) {
+			const newProduct = Object.assign({}, product);
+			newProduct.images.push(reader.result);
+			self.setState({
+				product: newProduct
+			});
+		};
+	};
 
 	saveData = () => {
 		//API CALL to push product data
+
+		//Close the Form
 		this.props.closeForm();
 	};
 
@@ -47,14 +62,14 @@ export default class ProductDetailsForm extends React.Component {
 							<ImageThumb
 								width="90px"
 								upload
-								clickHandler={this.uploadImage}
+								changeHandler={this.uploadImage}
 								imageSource={placeholderImageLink}
 							/>
 						</div>
 					) : (
 						<ImageThumb
 							upload
-							clickHandler={this.uploadImage}
+							changeHandler={this.uploadImage}
 							imageSource={placeholderImageLink}
 						/>
 					)}
