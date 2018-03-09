@@ -154,6 +154,8 @@ body {
 	right: 0px;
 	height: 50px !important;
 	width: 50px !important;
+	z-index: 99;
+	cursor: pointer;
 }
 
 .grid {
@@ -173,3 +175,49 @@ body {
 	grid-row-gap: 10px;
 	grid-template-rows: 1fr 1fr 1fr;
 }
+
+.hidden {
+	display: none;
+}
+
+.upload-box {
+	height: 100%;
+	width: 100%;
+	background: rgba(255, 255, 255, 0.8);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+}
+
+.upload-box label {
+	z-index: 2;
+	height: 50%;
+	background: transparent;
+	width: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: flex-end;
+	flex-direction: column;
+}
+
+.primary-text {
+	color: #666;
+}
+
+.secondary-text {
+	color: #777;
+}
+
+.margin-top-8 {
+	margin-top: 8px;
+}
+
+.margin-top-16 {
+	margin-top: 16px;
+}
+
+

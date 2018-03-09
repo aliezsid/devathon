@@ -25391,7 +25391,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var styles = {
 	appRoot: {
 		background: "#F5F5F5",
-		height: "100%",
+		minHeight: "100vh",
 		width: "100%"
 	}
 };
@@ -25423,7 +25423,7 @@ var styles = {
 	btn: {
 		padding: "9px",
 		display: "inline-block",
-		cursor: "pointer"
+		cursor: "pointer !important"
 	},
 	btnPrimary: {
 		background: "#56C9E9",
@@ -25591,6 +25591,14 @@ var _react = require("react");
 
 var _react2 = _interopRequireDefault(_react);
 
+var _uniqueId = require("lodash/fp/uniqueId");
+
+var _uniqueId2 = _interopRequireDefault(_uniqueId);
+
+var _Button = require("./Button");
+
+var _Button2 = _interopRequireDefault(_Button);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var thumbWidth = 300;
@@ -25598,6 +25606,7 @@ var thumbWidth = 300;
 var ThumbStyle = function ThumbStyle(width) {
 	return {
 		imageThumb: {
+			position: "relative",
 			height: width || thumbWidth,
 			width: width || thumbWidth,
 			background: "rgba(0,0,0,0.12)"
@@ -25612,15 +25621,46 @@ var ThumbStyle = function ThumbStyle(width) {
 
 exports.default = function (props) {
 	var computedStyle = void 0;
+	var uploadId = (0, _uniqueId2.default)();
 	computedStyle = ThumbStyle(props.width);
+	var imageWidth = props.width ? parseInt(props.width.replace("px", "")) : thumbWidth;
 	return _react2.default.createElement(
 		"div",
-		{ className: "image-thumb", style: computedStyle.imageThumb },
-		_react2.default.createElement("img", { style: computedStyle.image, src: props.imageSource, alt: "" })
+		{
+			className: "image-thumb",
+			onClick: props.clickHandler,
+			style: computedStyle.imageThumb
+		},
+		_react2.default.createElement("img", { style: computedStyle.image, src: props.imageSource, alt: "" }),
+		props.upload ? _react2.default.createElement(
+			"div",
+			{ className: "upload-box" },
+			_react2.default.createElement("input", {
+				id: uploadId,
+				type: "file",
+				className: "hidden",
+				accept: "image/*"
+			}),
+			_react2.default.createElement(
+				"label",
+				{ htmlFor: uploadId },
+				_react2.default.createElement(_Button2.default, { transparentsquare: true, label: "+" }),
+				imageWidth < 300 ? null : _react2.default.createElement(
+					"h3",
+					{ className: "primary-text margin-top-8" },
+					"Add More Photos"
+				),
+				imageWidth < 300 ? null : _react2.default.createElement(
+					"p",
+					{ className: "secondary-text margin-top-8" },
+					"Click here"
+				)
+			)
+		) : null
 	);
 };
 
-},{"react":236}],241:[function(require,module,exports){
+},{"./Button":238,"lodash/fp/uniqueId":192,"react":236}],241:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -25715,6 +25755,10 @@ var ProductCards = function (_React$Component) {
 			_this.setState({
 				visibleModalId: id
 			});
+		}, _this.removeModal = function () {
+			_this.setState({
+				visibleModalId: false
+			});
 		}, _temp), _possibleConstructorReturn(_this, _ret);
 	}
 
@@ -25739,7 +25783,10 @@ var ProductCards = function (_React$Component) {
 						price: product.price,
 						images: product.images
 					}),
-					visibleModalId === product.id ? _react2.default.createElement(_ProductDetailsForm2.default, { product: product }) : null
+					visibleModalId === product.id ? _react2.default.createElement(_ProductDetailsForm2.default, {
+						closeForm: _this2.removeModal,
+						product: product
+					}) : null
 				);
 			});
 			return _react2.default.createElement(
@@ -25821,6 +25868,9 @@ var ProductDetailsForm = function (_React$Component) {
 				a.product[name] = value;
 				return a;
 			});
+		}, _this.uploadImage = function () {}, _this.saveData = function () {
+			//API CALL to push product data
+			_this.props.closeForm();
 		}, _temp), _possibleConstructorReturn(_this, _ret);
 	}
 
@@ -25853,9 +25903,15 @@ var ProductDetailsForm = function (_React$Component) {
 						}),
 						_react2.default.createElement(_ImageThumb2.default, {
 							width: "90px",
+							upload: true,
+							clickHandler: this.uploadImage,
 							imageSource: placeholderImageLink
 						})
-					) : _react2.default.createElement(_ImageThumb2.default, { imageSource: placeholderImageLink })
+					) : _react2.default.createElement(_ImageThumb2.default, {
+						upload: true,
+						clickHandler: this.uploadImage,
+						imageSource: placeholderImageLink
+					})
 				),
 				_react2.default.createElement(
 					"div",
@@ -25900,14 +25956,19 @@ var ProductDetailsForm = function (_React$Component) {
 				),
 				_react2.default.createElement(
 					"div",
-					{ className: "padding-left-25 width-100" },
+					{ className: "padding-left-25" },
 					_react2.default.createElement(_Input2.default, {
 						label: "Description",
 						onChange: this.inputChange,
 						placeholder: "Enter Description for Product"
 					})
 				),
-				_react2.default.createElement(_Button2.default, { styleId: "modal-button", square: true, label: "\u2192" })
+				_react2.default.createElement(_Button2.default, {
+					styleId: "modal-button",
+					clickHandler: this.saveData,
+					square: true,
+					label: "\u2192"
+				})
 			);
 		}
 	}]);

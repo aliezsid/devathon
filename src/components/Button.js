@@ -4,7 +4,7 @@ const styles = {
 	btn: {
 		padding: "9px",
 		display: "inline-block",
-		cursor: "pointer"
+		cursor: "pointer !important"
 	},
 	btnPrimary: {
 		background: "#56C9E9",

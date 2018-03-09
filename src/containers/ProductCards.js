@@ -14,6 +14,12 @@ export default class ProductCards extends React.Component {
 		});
 	};
 
+	removeModal = () => {
+		this.setState({
+			visibleModalId: false
+		});
+	};
+
 	render() {
 		const { data, visibleModalId } = this.state;
 		const CardList = data.map(product => (
@@ -27,7 +33,10 @@ export default class ProductCards extends React.Component {
 					images={product.images}
 				/>
 				{visibleModalId === product.id ? (
-					<ProductDetailsForm product={product} />
+					<ProductDetailsForm
+						closeForm={this.removeModal}
+						product={product}
+					/>
 				) : null}
 			</div>
 		));

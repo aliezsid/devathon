@@ -8,7 +8,7 @@ import ProductCards from "./containers/ProductCards";
 const styles = {
 	appRoot: {
 		background: "#F5F5F5",
-		height: "100%",
+		minHeight: "100vh",
 		width: "100%"
 	}
 };

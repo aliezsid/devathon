@@ -20,6 +20,13 @@ export default class ProductDetailsForm extends React.Component {
 		});
 	};
 
+	uploadImage = () => {};
+
+	saveData = () => {
+		//API CALL to push product data
+		this.props.closeForm();
+	};
+
 	render() {
 		const { currency, product } = this.state;
 		const placeholderImageLink =
@@ -39,11 +46,17 @@ export default class ProductDetailsForm extends React.Component {
 							))}
 							<ImageThumb
 								width="90px"
+								upload
+								clickHandler={this.uploadImage}
 								imageSource={placeholderImageLink}
 							/>
 						</div>
 					) : (
-						<ImageThumb imageSource={placeholderImageLink} />
+						<ImageThumb
+							upload
+							clickHandler={this.uploadImage}
+							imageSource={placeholderImageLink}
+						/>
 					)}
 				</div>
 				<div className="input-container">
@@ -87,14 +100,19 @@ export default class ProductDetailsForm extends React.Component {
 						label="Inventory"
 					/>
 				</div>
-				<div className="padding-left-25 width-100">
+				<div className="padding-left-25">
 					<Input
 						label="Description"
 						onChange={this.inputChange}
 						placeholder="Enter Description for Product"
 					/>
 				</div>
-				<Button styleId="modal-button" square label="&rarr;" />
+				<Button
+					styleId="modal-button"
+					clickHandler={this.saveData}
+					square
+					label="&rarr;"
+				/>
 			</div>
 		);
 	}
