@@ -7,9 +7,9 @@ const mockData = [
 		images: [
 			"https://images.pexels.com/photos/33045/lion-wild-africa-african.jpg?w=1260&h=750&auto=compress&cs=tinysrgb"
 		],
-		price: "3,000,000",
+		price: 3000000,
 		offerPrice: "",
-		shippingPrice: "",
+		shippingPrice: 180,
 		inventory: "",
 		productDescription: ""
 	},
@@ -21,8 +21,8 @@ const mockData = [
 			"https://images.pexels.com/photos/33045/lion-wild-africa-african.jpg?w=1260&h=750&auto=compress&cs=tinysrgb",
 			"https://images.pexels.com/photos/33045/lion-wild-africa-african.jpg?w=1260&h=750&auto=compress&cs=tinysrgb"
 		],
-		price: "3,000,000",
-		offerPrice: "2,00,000",
+		price: 3000000,
+		offerPrice: 3000000,
 		shippingPrice: "",
 		inventory: "",
 		productDescription: ""

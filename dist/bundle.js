@@ -25951,7 +25951,8 @@ var ProductDetailsForm = function (_React$Component) {
 						onChange: this.inputChange,
 						name: "inventory",
 						value: product.inventory,
-						label: "Inventory"
+						label: "Inventory",
+						placeholder: "1"
 					})
 				),
 				_react2.default.createElement(
@@ -25995,17 +25996,17 @@ var mockData = [{
 	id: (0, _uniqueId2.default)(),
 	title: "Lion",
 	images: ["https://images.pexels.com/photos/33045/lion-wild-africa-african.jpg?w=1260&h=750&auto=compress&cs=tinysrgb"],
-	price: "3,000,000",
+	price: 3000000,
 	offerPrice: "",
-	shippingPrice: "",
+	shippingPrice: 180,
 	inventory: "",
 	productDescription: ""
 }, {
 	id: (0, _uniqueId2.default)(),
 	title: "Mountain",
 	images: ["https://images.pexels.com/photos/640781/pexels-photo-640781.jpeg?w=1260&h=750&auto=compress&cs=tinysrgb", "https://images.pexels.com/photos/33045/lion-wild-africa-african.jpg?w=1260&h=750&auto=compress&cs=tinysrgb", "https://images.pexels.com/photos/33045/lion-wild-africa-african.jpg?w=1260&h=750&auto=compress&cs=tinysrgb"],
-	price: "3,000,000",
-	offerPrice: "2,00,000",
+	price: 3000000,
+	offerPrice: 3000000,
 	shippingPrice: "",
 	inventory: "",
 	productDescription: ""
